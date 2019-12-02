@@ -1,0 +1,83 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29 nov. 2019, 14:34:07
+    Author     : juan
+*/
+
+.ui-datatable .ui-datatable-header {
+        text-align: right !important;
+    }
+    
+    .ui-datatable .ui-column-filter{
+ display:none !important;
+}
+
+.ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus,.ui-inputfield.ui-state-hover, .ui-widget-content .ui-inputfield.ui-state-hover, .ui-widget-header .ui-inputfield.ui-state-hover{
+    border-color:#ffffff;
+}
+
+/* PrimeFaces Extensions */
+.ui-inputfield,
+.ui-widget-content 
+.ui-inputfield, 
+.ui-widget-header 
+.ui-inputfield{background:#575757;
+              -moz-box-shadow:none;
+              -webkit-box-shadow:none;
+              box-shadow:none;
+              color:#ffffff;}
+.ui-inputfield.ui-state-focus, 
+.ui-widget-content 
+.ui-inputfield.ui-state-focus,
+.ui-widget-header 
+.ui-inputfield.ui-state-focus{
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+    box-shadow:none;}
+
+.ui-tabs .ui-tabs-nav.ui-widget-header,.ui-dialog .ui-dialog-titlebar.ui-widget-header{border-bottom:2px solid #0099E0;}
+
+.ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield {
+    font-weight: normal;
+    border: none;
+    border-bottom: 2px solid;
+    border-bottom-color: #FFFFFF;
+    
+}
+
+input::-webkit-input-placeholder { color: #ffffff; } 
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border: none;
+    border-bottom: 2px solid;
+    background: #3d3d3d;
+    font-weight: bold;
+    color: #eeeeee;
+    outline: none !important;
+    outline-width: 0 !important;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield {
+    font-weight: normal;
+    background: #575757;
+}
+
+button:active {
+  transform: scale(0.99);
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+body .ui-panel .ui-panel-content{
+   border-radius: 0em 0em 1em 1em;
+   padding-left: 20px;
+}
+
