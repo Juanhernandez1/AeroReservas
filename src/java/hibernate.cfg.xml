@@ -44,6 +44,7 @@ Contributor(s):
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/reservas?zeroDateTimeBehavior=CONVERT_TO_NULL</property>
     <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.enable_lazy_load_no_trans">true</property>
     <mapping resource="modelo/entidad/Vuelo.hbm.xml"/>
     <mapping resource="modelo/entidad/Aerolinea.hbm.xml"/>
     <mapping resource="modelo/entidad/Origen.hbm.xml"/>

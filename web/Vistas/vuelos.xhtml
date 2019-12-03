@@ -1,10 +1,220 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./../Plantilla/plantilla.xhtml">
+                template="./../Plantilla/plantilla.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="content">
-        prueva 2
+    <ui:define name="CRUD">
+        <h:form>
+            <p:commandButton  title="Guardar" icon="pi pi-save"  type="button" onclick="agre()"  />
+            <p:commandButton  title="Editar" icon="pi pi-pencil" type="button" onclick="modi()" />
+            <p:commandButton  title="Eliminar" icon="pi pi-trash" type="button" onclick="elimin()" />
+        </h:form>
     </ui:define>
 
+    <ui:define name="top">
+        <h1>Vuelos</h1> 
+    </ui:define>
+
+    <ui:define name="content">
+        <!--      esta parte tiene que ir talcual por se usa los botones de forma remota   -->
+        <h:form style="display: none">
+            <p:remoteCommand name="agre" actionListener="#{vueloControl.limpiarVuelo()}" oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"/>
+            <p:separator/>
+        </h:form>
+        <!-- ***************************************************************************** -->
+        <h:form id="formListado">
+            <p:dataTable paginator="true" paginatorPosition="bottom" rows="6"
+                         selectionMode="single" selection="#{vueloControl.vuelo}" rowKey="#{vuelo.idVuelo}"  
+                         id="tablaVuelos" var="vuelo" value="#{vueloControl.listaVuelos}"
+                         style="mamargin: 0px !important;" widgetVar="prodTable"
+                         emptyMessage="No Hay Datos" filteredValue="#{vueloControl.filtroV}">
+
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="Buscar: " />
+                        <p:inputText id="globalFilter" onkeyup="PF('prodTable').filter()" style="width:150px" />
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column filterBy="#{vuelo.idVuelo}"  headerText="ID" style="text-align: center"> 
+                    <h:outputText value="#{vuelo.idVuelo}" />
+                </p:column>
+                <p:column filterBy="#{vuelo.aerolinea.nombre}"  headerText="AEROLINEA">
+                    <h:outputText value="#{vuelo.aerolinea.nombre}" />
+                </p:column>
+                <p:column filterBy="#{vuelo.origen.pais}" filterMatchMode="contains" headerText="ORIGEN">
+                    <h:outputText value="#{vuelo.origen.pais}, #{vuelo.origen.ciudad}, #{vuelo.origen.aeropuerto}" />
+                </p:column>
+                <p:column filterBy="#{vuelo.destino.pais}" filterMatchMode="contains"  headerText="DESTINO">
+                    <h:outputText value="#{vuelo.destino.pais}, #{vuelo.destino.ciudad}, #{vuelo.destino.aeropuerto}" />
+                </p:column>
+                <p:column filterBy="#{vuelo.numeroAsientos}" filterMatchMode="contains" headerText="ASIENTOS" style="text-align: center">
+                    <h:outputText value="#{vuelo.numeroAsientos}" />
+                </p:column>
+                <p:column filterBy="#{vuelo.puerta}" filterMatchMode="contains" headerText="PUERTA" style="text-align: center">
+                    <h:outputText value="#{vuelo.puerta}" />
+                </p:column>
+                <p:column filterBy="#{vuelo.fecha}" filterMatchMode="contains" headerText="FECHA" style="text-align: center">
+                    <h:outputText value="#{vuelo.fecha}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" locale="ES"/>
+                    </h:outputText>                    
+                </p:column> 
+                <p:column filterBy="#{vuelo.hora}" filterMatchMode="contains"  headerText="HORA" style="text-align: center">
+                    <h:outputText value="#{vuelo.hora}">
+                        <f:convertDateTime pattern="HH:MM" locale="ES" timeZone="America/El_Salvador"/>
+                    </h:outputText>
+                </p:column> 
+                <!--      esta parte tiene que ir talcual por se usa los botones de forma remota   -->
+                   <p:column headerText="MODIFICAR" style="text-align: center; display: none"  >
+                           <p:remoteCommand name="modi" oncomplete="PF('dialogoModificar').show();" update=":formModificar" />
+                       </p:column> 
+                <p:column headerText="ELIMINAR" style="text-align: center; display: none" >
+                    <p:remoteCommand name="elimin" oncomplete="PF('dialogoEliminar').show();" update=":formEliminar" />
+                </p:column>
+                <!-- ***************************************************************************** -->
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="FORM">
+        <h:form id="formAgregar">
+            <p:dialog id="dlgAgregar" header="Agregar Vuelo" widgetVar="dialogoAgregar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <p:panelGrid columns="2" style="margin: 0 auto; margin-bottom: 10px;">   
+
+                    <p:outputLabel value="Aerolinea:"/>
+
+                    <p:selectOneMenu value="#{vueloControl.vuelo.aerolinea.idAerolinea}" converter="entityConverter" panelStyle="width:170px" effect="fade"
+                                     style="width:170px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItem itemLabel="-- Seleccione -- "/>
+                        <f:selectItems value="#{vueloControl.listaAerolineas}" var="vueloc" itemLabel="#{vueloc.label}" itemValue="#{vueloc}" />
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{vueloControl.vuelo.aerolinea.nombre}" />
+                        </p:column>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Origen:"/>
+
+                    <p:selectOneMenu value="#{vueloControl.vuelo.origen.idOrigen}" converter="entityConverter" panelStyle="width:170px" effect="fade"
+                                     style="width:170px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItem itemLabel="-- Seleccione -- "/>
+                        <f:selectItems value="#{vueloControl.listaOrigenes}" var="orin" itemLabel="#{orin}" itemValue="#{orin}" />
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{vueloControl.vuelo.origen.pais}" />
+                        </p:column>
+                    </p:selectOneMenu>
+
+
+                    <p:outputLabel value="Destino:"/>
+
+                    <p:selectOneMenu value="#{vueloControl.vuelo.destino.idDestino}" converter="entityConverter" panelStyle="width:170px"
+                                     effect="fade"  style="width:170px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItem itemLabel="-- Seleccione -- "/>
+                        <f:selectItems value="#{vueloControl.listaDestinos}" var="desti" itemLabel="#{desti.label}" itemValue="#{desti}" />
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="nombre" />
+                            </f:facet>
+                            <h:outputText value="#{vueloControl.vuelo.destino.pais}"  />
+                        </p:column>
+                    </p:selectOneMenu>
+
+
+                    <p:outputLabel value="Asientos:"/>
+                    <p:inputText value="#{vueloControl.vuelo.numeroAsientos}"/>
+                    <p:outputLabel value="Puerta:"/>
+                    <p:inputText value="#{vueloControl.vuelo.puerta}"/>
+                    <p:outputLabel value="Fecha:"/>
+                    <p:calendar value="#{vueloControl.vuelo.fecha}" pattern="yyyy/MM/dd" locale="es" navigator="true" mask="true" yearRange="c:c+1"/>
+                    <p:outputLabel  value="Hora:" />
+                    <p:calendar  value="#{vueloControl.vuelo.hora}" pattern="hh:mm" timeOnly="true"  />
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{vueloControl.agregarVuelo()}" update=":formListado:tablaVuelos" oncomplete="PF('dialogoAgregar').hide();"/>
+                <p:commandButton  value="Cancelar" styleClass="botonEl" style="margin-left: 15px;background-color: indianred;" onclick="PF('dialogoAgregar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+        
+          
+             <h:form id="formModificar">
+            <p:dialog id="dlgModificar" header="Modificar Vuelo" widgetVar="dialogoModificar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <p:panelGrid columns="2" style="margin: 0 auto; margin-bottom: 10px;">   
+
+                    <p:outputLabel value="Aerolinea:"/>
+
+                    <p:selectOneMenu value="#{vueloControl.vuelo.aerolinea.idAerolinea}" converter="entityConverter" panelStyle="width:170px" effect="fade"
+                                     style="width:170px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItem itemLabel="-- Seleccione -- "/>
+                        <f:selectItems value="#{vueloControl.listaAerolineas}" var="vueloc" itemLabel="#{vueloc.label}" itemValue="#{vueloc}" />
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{vueloControl.vuelo.aerolinea.nombre}" />
+                        </p:column>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Origen:"/>
+
+                    <p:selectOneMenu value="#{vueloControl.vuelo.origen.idOrigen}" converter="entityConverter" panelStyle="width:170px" effect="fade"
+                                     style="width:170px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItem itemLabel="-- Seleccione -- "/>
+                        <f:selectItems value="#{vueloControl.listaOrigenes}" var="orin" itemLabel="#{orin}" itemValue="#{orin}" />
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{vueloControl.vuelo.origen.pais}" />
+                        </p:column>
+                    </p:selectOneMenu>
+
+
+                    <p:outputLabel value="Destino:"/>
+
+                    <p:selectOneMenu value="#{vueloControl.vuelo.destino.idDestino}" converter="entityConverter" panelStyle="width:170px"
+                                     effect="fade"  style="width:170px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItem itemLabel="-- Seleccione -- "/>
+                        <f:selectItems value="#{vueloControl.listaDestinos}" var="desti" itemLabel="#{desti.label}" itemValue="#{desti}" />
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="nombre" />
+                            </f:facet>
+                            <h:outputText value="#{vueloControl.vuelo.destino.pais}"  />
+                        </p:column>
+                    </p:selectOneMenu>
+
+
+                    <p:outputLabel value="Asientos:"/>
+                    <p:inputText value="#{vueloControl.vuelo.numeroAsientos}"/>
+                    <p:outputLabel value="Puerta:"/>
+                    <p:inputText value="#{vueloControl.vuelo.puerta}"/>
+                    <p:outputLabel value="Fecha:"/>
+                    <p:calendar value="#{vueloControl.vuelo.fecha}" pattern="yyyy/MM/dd" locale="es" navigator="true" mask="true" yearRange="c:c+1"/>
+                    <p:outputLabel  value="Hora:" />
+                    <p:calendar  value="#{vueloControl.vuelo.hora}" pattern="hh:mm" timeOnly="true"  />
+                </p:panelGrid>
+                  <p:commandButton  value="Guardar" actionListener="#{vueloControl.modificarVuelo()}" update=":formListado:tablaVuelos" oncomplete="PF('dialogoModificar').hide();"/>  <p:commandButton styleClass="botonEl" style="margin-left: 15px;background-color: indianred;" value="Cancelar" onclick="PF('dialogoModificar').hide();" />
+            </p:dialog>
+        </h:form>
+        
+
+        <h:form id="formEliminar">
+            <p:dialog id="dlgEliminar" header="Eliminar Aerolinea" widgetVar="dialogoEliminar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <h:outputText value="Desea eliminar este registro?"/>
+                <p:commandButton  value="Si" actionListener="#{vueloControl.eliminarVuelo()}" update=":formListado:tablaVuelos" oncomplete="PF('dialogoEliminar').hide();"/>
+                <p:commandButton styleClass="botonEl" style="margin-left: 15px;background-color: indianred;"  value="No" onclick="PF('dialogoEliminar').hide();" />
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+
 </ui:composition>
+

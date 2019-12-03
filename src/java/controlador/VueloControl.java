@@ -8,6 +8,7 @@ package controlador;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
@@ -25,6 +26,7 @@ import modelo.entidad.Vuelo;
 public class VueloControl implements Serializable {
 
     private List<Vuelo> listaVuelos;
+    private List<Vuelo> filtroV;
     private Vuelo vuelo;
     // agregar para los combos
     private List<SelectItem> listaAerolineas;
@@ -111,4 +113,13 @@ public class VueloControl implements Serializable {
         return listaDestinos;
     }
 
+    public List<Vuelo> getFiltroV() {
+        return filtroV;
+    }
+
+    public void setFiltroV(List<Vuelo> filtroV) {
+        this.filtroV = filtroV;
+    }
+    
+ 
 }

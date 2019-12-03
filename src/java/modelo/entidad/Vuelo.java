@@ -23,6 +23,9 @@ public class Vuelo  implements java.io.Serializable {
      private Set<VueloClase> vueloClases = new HashSet<VueloClase>(0);
 
     public Vuelo() {
+        origen = new Origen();
+        aerolinea = new Aerolinea();
+        destino = new Destino();
     }
 
     public Vuelo(Aerolinea aerolinea, Destino destino, Origen origen, Integer numeroAsientos, Integer puerta, Date fecha, Date hora, Set<VueloClase> vueloClases) {

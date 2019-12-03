@@ -69,8 +69,8 @@
                     <p:outputLabel value="Telefono:"/>
                     <p:inputText value="#{aerolineaControl.aerolinea.telefono}"/>
                 </p:panelGrid>
-                <p:commandButton  value="Guardar" actionListener="#{aerolineaControl.modificarAerolinea()}" update=":formListado:tablaAerolineas" oncomplete="PF('dialogoModificar').hide();"/>
-                <p:commandButton styleClass="botonEl" style="margin-left: 15px;background-color: indianred;" value="Cancelar" onclick="PF('dialogoModificar').hide();" />
+                <p:commandButton  value="Guardar" actionListener="#{vueloControl.modificarVuelo()}" update=":formListado:tablaVuelos" oncomplete="PF('dialogoModificar').hide();"/>
+               <p:commandButton styleClass="botonEl" style="margin-left: 15px;background-color: indianred;" value="Cancelar" onclick="PF('dialogoModificar').hide();" />
             </p:dialog>
         </h:form>
 
