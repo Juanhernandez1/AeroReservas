@@ -20,7 +20,7 @@
         
 
         <p:layout fullPage="true">   
-            
+       <!-- encabezado y botones del mantenimiento -->     
             <p:layoutUnit position="north" size="70"  >
             <div id="top" class="top">
                 <h:form class="topfrom"> 
@@ -32,9 +32,11 @@
                             <span class="ui-separator">
                                 <span class="ui-icon pi pi-ellipsis-v" />
                             </span>
+                                <!-- dentro del la sigiente seccion caen los botones -->
                             <ui:insert name="CRUD">
-                                Welcome to PrimeFaces
+                                Botones de mantenimiento 
                             </ui:insert>
+                                <!-- ********************************************** -->
                             <span class="ui-separator">
                                 <span class="ui-icon pi pi-ellipsis-v" />
                             </span>
@@ -42,59 +44,58 @@
 
                         <f:facet name="right" >
                             <span class="tituloHeader">
+                                    <!-- dentro del la sigiente seccion caen los titulos-->
                                 <ui:insert name="top">
-                                    Welcome to PrimeFaces
+                                    titulo 
                                 </ui:insert>
+                                    <!-- ********************************************** -->
                             </span>
 
+                            <!-- boton de usuraio y menu depligable -->
                             <p:menuButton style="float: right" title="Usuario" value="Usuario" icon=" pi pi-user" >
                                 <p:menuitem value="Mis Datos" url="http://www.primefaces.org" icon="pi pi-home" />
                                 <p:menuitem value="Salir" url="http://www.primefaces.org" icon="pi pi-home" />
                             </p:menuButton>
+                            <!-- ********************************************** -->
                         </f:facet>
                     </p:toolbar>
                 </h:form> 
             </div>
-
         </p:layoutUnit>
-
+            
+<!-- Este es el menu -->
             <p:layoutUnit position="west" size="185" header="Menu">
                 <p:menu>
                     <p:submenu label="Reservas">
-                        <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                        <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                        <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
+                        <p:menuitem value="Vuelos" outcome="/Vistas/vuelos" />
                     </p:submenu>
 
                     <p:submenu label="Mantenimientos">
-                        <p:menuitem value="Vuelos" outcome="/Vistas/vuelos" />
-                        <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                        <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-
+                         <p:menuitem value="Aerolines" outcome="/Vistas/aerolineas" />
+                         <p:menuitem value="Destinos" outcome="/Vistas/destinos" />
                     </p:submenu>
 
                     <p:submenu label="Administracion">
-                        <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                        <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                        <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-
+                        <p:menuitem value="Usuarios" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
                     </p:submenu>
-
-
                 </p:menu>
             </p:layoutUnit>
+<!-- ********************************************** -->
 
+<!-- contenido o tabla  -->
             <p:layoutUnit position="center">
                 <div id="content" class="left_content">
                     <ui:insert name="content">Content</ui:insert>
                 </div>
             </p:layoutUnit>
-
         </p:layout>
+<!-- ********************************************** -->
 
+<!-- formularios -->
         <ui:insert name="FORM">
-            Welcome to PrimeFaces
+            Formularios
         </ui:insert>
+<!-- ********************************************** -->
 
     </h:body>
 

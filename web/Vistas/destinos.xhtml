@@ -15,27 +15,32 @@
     </ui:define>
 
     <ui:define name="top">
-        <h1>AeroLineas</h1> 
+        <h1>Destinos</h1> 
     </ui:define>
 
     <ui:define name="content">
-        <h:form style="display: none">
-            <p:remoteCommand name="agre" actionListener="#{aerolineaControl.limpiarAerolinea()}" oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"/>
+         <h:form style="display: none">
+             <p:remoteCommand name="agre" actionListener="#{destinosControlador.limpiarDestinos()}" oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"/>
             <p:separator/>
         </h:form>
+        <!-- Recordar Cabiar el id por el respectivo segun la tabla -->
         <h:form id="formListado" style="mamargin: 0px !important;">
-            <p:dataTable id="tablaAerolineas" style="mamargin: 0px !important;"  paginator="true" paginatorPosition="bottom" rows="13" selectionMode="single" selection="#{aerolineaControl.aerolinea}" rowKey="#{aerolinea.idAerolinea}" var="aerolinea" value="#{aerolineaControl.listaAerolineas}" emptyMessage="No existen aerolineas">
-                <p:column headerText="NOMBRE">
-                    <h:outputText value="#{aerolinea.nombre}"  />
+            <p:dataTable id="tablaDestinos" style="mamargin: 0px !important;"  paginator="true" paginatorPosition="bottom" rows="13" 
+                         selectionMode="single" selection="#{destinosControlador.destino}" rowKey="#{destino.idDestino}"
+                         var="destino" value="#{destinosControlador.listarDestinos}" emptyMessage="No existen aerolineas">
+                <p:column headerText="PAIS">
+                    <h:outputText value="#{destino.pais}"  />
                 </p:column>
-                <p:column headerText="TELEFONO">
-                    <h:outputText value="#{aerolinea.telefono}" />
+                <p:column headerText="CIUDAD">
+                    <h:outputText value="#{destino.ciudad}" />
                 </p:column>
 
+                <p:column headerText="AEROPUERTO">
+                    <h:outputText value="#{destino.aeropuerto}" />
+                </p:column>
+                
                 <p:column headerText="MODIFICAR" style="text-align: center; display: none"  >
-
                     <p:remoteCommand name="modi" oncomplete="PF('dialogoModificar').show();" update=":formModificar">
-
                     </p:remoteCommand >
                 </p:column>
                 <p:column headerText="ELIMINAR" style="text-align: center; display: none" >
@@ -48,28 +53,33 @@
     </ui:define>
 
     <ui:define name="FORM">
+       
         <h:form id="formAgregar">
-            <p:dialog id="dlgAgregar" header="Agregar Aerolinea" widgetVar="dialogoAgregar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+            <p:dialog id="dlgAgregar" header="Agregar Destinosa" widgetVar="dialogoAgregar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
                 <p:panelGrid columns="2" style="margin: 0 auto; margin-bottom: 10px;">                                
-                    <p:outputLabel value="Aerolinea:"/>
-                    <p:inputText value="#{aerolineaControl.aerolinea.nombre}"/>
-                    <p:outputLabel value="Telefono:"/>
-                    <p:inputText value="#{aerolineaControl.aerolinea.telefono}"/>
+                    <p:outputLabel value="Pais:"/>
+                    <p:inputText value="#{destinosControlador.destino.pais}"/>
+                    <p:outputLabel value="Ciudad:"/>
+                    <p:inputText value="#{destinosControlador.destino.ciudad}"/>      
+                    <p:outputLabel value="Aeropuerto:"/>
+                    <p:inputText value="#{destinosControlador.destino.aeropuerto}"/>  
                 </p:panelGrid>
-                <p:commandButton  value="Guardar" actionListener="#{aerolineaControl.agregarAerolinea()}" update=":formListado:tablaAerolineas" oncomplete="PF('dialogoAgregar').hide();"/>
-                <p:commandButton  value="Cancelar" styleClass="botonEl" style="margin-left: 15px;background-color: indianred;" onclick="PF('dialogoAgregar').hide();" oncomplete="#{aerolineaControl.limpiarAerolinea()}"/>
+                <p:commandButton  value="Guardar" actionListener="#{destinosControlador.agregarDestinos()}" update=":formListado:tablaDestinos" oncomplete="PF('dialogoAgregar').hide();"/>
+                <p:commandButton  value="Cancelar" styleClass="botonEl" style="margin-left: 15px;background-color: indianred;" onclick="PF('dialogoAgregar').hide();" oncomplete="#{destinosControlador.limpiarDestinos()}"/>
             </p:dialog>
         </h:form>
 
         <h:form id="formModificar">
             <p:dialog id="dlgModificar" header="Modificar Aerolinea" widgetVar="dialogoModificar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
                 <p:panelGrid columns="2" style="margin: 0 auto; margin-bottom: 10px;">                                
-                    <p:outputLabel value="Aerolinea:"/>
-                    <p:inputText value="#{aerolineaControl.aerolinea.nombre}"/>
-                    <p:outputLabel value="Telefono:"/>
-                    <p:inputText value="#{aerolineaControl.aerolinea.telefono}"/>
+                      <p:outputLabel value="Pais:"/>
+                    <p:inputText value="#{destinosControlador.destino.pais}"/>
+                    <p:outputLabel value="Ciudad:"/>
+                    <p:inputText value="#{destinosControlador.destino.ciudad}"/>      
+                    <p:outputLabel value="Aeropuerto:"/>
+                    <p:inputText value="#{destinosControlador.destino.aeropuerto}"/>  
                 </p:panelGrid>
-                <p:commandButton  value="Guardar" actionListener="#{aerolineaControl.modificarAerolinea()}" update=":formListado:tablaAerolineas" oncomplete="PF('dialogoModificar').hide();"/>
+                <p:commandButton  value="Guardar" actionListener="#{destinosControlador.modificarDestinos()}" update=":formListado:tablaDestinos" oncomplete="PF('dialogoModificar').hide();"/>
                <p:commandButton styleClass="botonEl" style="margin-left: 15px;background-color: indianred;" value="Cancelar" onclick="PF('dialogoModificar').hide();" />
             </p:dialog>
         </h:form>
@@ -77,11 +87,12 @@
         <h:form id="formEliminar">
             <p:dialog id="dlgEliminar" header="Eliminar Aerolinea" widgetVar="dialogoEliminar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
                 <h:outputText value="Desea eliminar este registro?"/>
-                <p:commandButton  style="margin-left: 15px;" value="Si" actionListener="#{aerolineaControl.eliminarAerolinea()}" update=":formListado:tablaAerolineas" oncomplete="PF('dialogoEliminar').hide();"/>
+                <p:commandButton  style="margin-left: 15px;" value="Si" actionListener="#{destinosControlador.eliminarDestinos()}" update=":formListado:tablaDestinos" oncomplete="PF('dialogoEliminar').hide();"/>
                 <p:commandButton styleClass="botonEl" style="margin-left: 15px;background-color: indianred;"  value="No" onclick="PF('dialogoEliminar').hide();" />
             </p:dialog>
         </h:form>
+        
+        
     </ui:define>
-
 
 </ui:composition>
